@@ -7,23 +7,67 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 
 	// initialise game objects
 
+	Rectangle.setSize(sf::Vector2f(50, 25));
+	Rectangle.setPosition(250, 250);
+	Rectangle.setFillColor(sf::Color::Red);
+
+	Circle.setRadius(15);
+	Circle.setFillColor(sf::Color::Green);
+	Circle.setPosition(150, 150);
+
+	RectBounce.setSize(sf::Vector2f(50, 25));
+	RectBounce.setPosition(650, 400);
+	RectBounce.setFillColor(sf::Color::Blue);
+
+	speed = 150.f;
+	plspeed = 225.f;
 }
 
 Level::~Level()
 {
-
 }
 
 // handle user input
 void Level::handleInput(float dt)
 {
-
+	if (input->isKeyDown(sf::Keyboard::W))
+	{
+		if (Circle.getPosition().y >= 0)
+		{
+			Circle.move(0, -plspeed * dt);
+		}
+	}
+	if (input->isKeyDown(sf::Keyboard::A))
+	{
+		if (Circle.getPosition().x >= 0)
+		{
+			Circle.move(-plspeed * dt, 0);
+		}
+	}
+	if (input->isKeyDown(sf::Keyboard::S))
+	{
+		if (Circle.getPosition().y <= window->getSize().y - 30)
+		{
+			Circle.move(0, plspeed * dt);
+		}
+	}
+	if (input->isKeyDown(sf::Keyboard::D))
+	{
+		if (Circle.getPosition().x <= window->getSize().x - 30)
+		{
+			Circle.move(plspeed * dt, 0);
+		}
+	}
 }
 
 // Update game objects
 void Level::update(float dt)
 {
-	
+	if (Rectangle.getPosition().x + 50 >= window->getSize().x || Rectangle.getPosition().x <= 0)
+	{
+		speed *= -1;
+	}
+	Rectangle.move(speed * dt, 0);
 }
 
 // Render level
@@ -31,13 +75,17 @@ void Level::render()
 {
 	beginDraw();
 
+	window->draw(Rectangle);
+	window->draw(Circle);
+	window->draw(RectBounce);
+
 	endDraw();
 }
 
-// clear back buffer
+// clear back buffer (100, 149, 237)
 void Level::beginDraw()
 {
-	window->clear(sf::Color(100, 149, 237));
+	window->clear(sf::Color(0, 0, 0));
 }
 
 // Ends rendering to the back buffer, and swaps buffer to the screen.
