@@ -27,7 +27,14 @@ private:
 	sf::RectangleShape Rectangle;
 	sf::CircleShape Circle;
 	sf::RectangleShape RectBounce;
-
+	
+	sf::Font font;
+	sf::Text blueSpeed;
+	// Other Variables
 	float speed;
-	float plspeed;
+	float plSpeed;
+	float rectSpeedX; float rectSpeedXTemp;
+	float rectSpeedY; float rectSpeedYTemp;
+
+	std::string rectangleSpeed;
 };
